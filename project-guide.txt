@@ -1,0 +1,43 @@
+######## Project Guide ########
+    Author : Bibhuti Bhusan Nayak
+    Mobile : 7873792903
+    Publish Date : 03-11-2024
+
+######## About Project ########    
+    React E-Commerce Shopping Application (Cash on Delivery)
+    Technologies
+        Frontend
+        1. HTML
+        2. CSS
+        3. Bootstrap 5
+        4. React (JSX)
+        Backend
+        1. JSON-SERVER (mock api)
+        
+######## How to Setup and Run the Project ########
+    1. Download Project Source Code : https://github.com/bibhuti147/live-project/archive/refs/heads/main.zip
+    2. Download Api Source Code : https://github.com/bibhuti147/live-project-api/archive/refs/heads/main.zip
+
+Note : Steps to setup the project
+    1. Download source code from above url
+    2. Unzip/extract both the folder
+    3. Install nodejs 18+ version in your system
+    4. Install react development environment using below command
+        npm install -g creat-react-app
+    5. Install JSON-SERVER to run api
+        npm install -g json-server
+    6. Start the JOSN-SERVER using below command
+        a. Open cmd in api folderm(that you have extracted) and run
+
+            json-server --watch data.json --port 1234
+    
+    7. Start react development server
+        a. Open cmd in react project folder that is "project1" and run this command
+            npm start
+
+        Note : You can browse http://localhost:3000
+
+    Thanks for your time to see my project.
+    I hope for positive response from your side.
+      Bibhuti (7873792903)
+###########################################################################
