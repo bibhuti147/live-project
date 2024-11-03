@@ -1,36 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Addproduct = () => {
   const [pname, setName] = useState("");
   const [pprice, setPrice] = useState("");
   const [pphoto, setPhoto] = useState("");
   const [pdesc, setDesc] = useState("");
+  const [pcate, setCate] = useState("");
+  const [catelist, setCatelist] = useState([]);
 
   const save = async () => {
     try {
-      const response = await fetch("http://localhost:1234/productapi", {
+      await fetch("http://localhost:1234/productapi", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: pname,
+          pname: pname,
           price: pprice,
           photo: pphoto,
-          description: pdesc,
+          category: pcate,
+          details: pdesc,
         }),
       });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("Product updated successfully:", data);
     } catch (error) {
       console.error("Error saving product:", error);
     }
   };
+
+  const getcategory = async () => {
+    await fetch("http://localhost:1234/categoryapi")
+      .then((response) => response.json())
+      .then((data) => setCatelist(data))
+      .catch((error) => console.error("Error:", error));
+  };
+
+  useEffect(() => {
+    getcategory();
+  }, []);
 
   return (
     <div className="mt-4">
@@ -39,7 +46,7 @@ const Addproduct = () => {
         The * Marked fields are mandatory
       </p>
       <div className="mx-3 row mt-4 text-center">
-        <div className="col-lg-4">
+        <div className="col-lg-3">
           <p
             className="text-lg-start fw-medium"
             style={{ marginBottom: "10px" }}
@@ -48,12 +55,12 @@ const Addproduct = () => {
           </p>
           <input
             type="text"
-            className="w-100"
+            className="w-100 form-control"
             value={pname}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-3">
           <p
             className="text-lg-start fw-medium"
             style={{ marginBottom: "10px" }}
@@ -62,12 +69,12 @@ const Addproduct = () => {
           </p>
           <input
             type="number"
-            className="w-100"
+            className="w-100 form-control"
             value={pprice}
             onChange={(e) => setPrice(e.target.value)}
           />
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-3">
           <p
             className="text-lg-start fw-medium"
             style={{ marginBottom: "10px" }}
@@ -76,10 +83,27 @@ const Addproduct = () => {
           </p>
           <input
             type="text"
-            className="w-100"
+            className="w-100 form-control"
             value={pphoto}
             onChange={(e) => setPhoto(e.target.value)}
           />
+        </div>
+        <div className="col-lg-3">
+          <p
+            className="text-lg-start fw-medium"
+            style={{ marginBottom: "10px" }}
+          >
+            Product Category*
+          </p>
+          <select
+            className="form-select"
+            onChange={(e) => setCate(e.target.value)}
+          >
+            <option value="">Choose</option>
+            {catelist.map((category, index) => {
+              return <option key={index}>{category.categoryname}</option>;
+            })}
+          </select>
         </div>
         <div className="col-lg-12 mt-4">
           <p
@@ -89,7 +113,7 @@ const Addproduct = () => {
             Product Description*
           </p>
           <textarea
-            className="w-100"
+            className="w-100 form-control"
             value={pdesc}
             onChange={(e) => setDesc(e.target.value)}
           />

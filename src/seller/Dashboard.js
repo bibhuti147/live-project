@@ -1,41 +1,56 @@
 import { useEffect, useState } from "react";
 
 const Mydashboard = () => {
-  const [products, setProducts] = useState([]);
+  const [plength, setPlength] = useState("");
+  const [clength, setClength] = useState("");
+  const [olength, setOlength] = useState(0);
 
   const getProducts = async () => {
-    try {
-      const response = await fetch("http://localhost:1234/productapi");
-      const data = await response.json();
-      setProducts(data);
-    } catch (error) {
-      console.error("Error saving product:", error);
-    }
+    await fetch(`http://localhost:1234/productapi`)
+      .then((response) => response.json())
+      .then((data) => setPlength(data.length))
+      .catch((error) => console.error("Error:", error));
+  };
+
+  const getCategory = async () => {
+    await fetch(`http://localhost:1234/categoryapi`)
+      .then((response) => response.json())
+      .then((data) => setClength(data.length))
+      .catch((error) => console.error("Error:", error));
   };
 
   useEffect(() => {
     getProducts();
+    getCategory();
   }, []);
 
   return (
     <div className="mt-4">
       <h1 className="col-lg-12 text-center">Seller Dashboard</h1>
       <div className="mt-4 row text-center">
-        <h3 className="text-primary col-lg-4">
+        <h3 className="text-info col-lg-3">
           <i
-            className="bi bi-suitcase-lg-fill"
+            className="fa fa-database fa-5x text-info"
             style={{ fontSize: "6rem" }}
           ></i>
           <br />
-          Total Product({products.length})
+          Product Category({clength})
         </h3>
-        <h3 className="text-warning col-lg-4">
-          <i className="bi bi-headset" style={{ fontSize: "6rem" }}></i>
+        <h3 className="text-primary col-lg-3">
+          <i
+            className="fa fa-suitcase fa-5x text-primary"
+            style={{ fontSize: "6rem" }}
+          ></i>
           <br />
-          Order Recieved(2)
+          Total Product({plength})
         </h3>
-        <h3 className="text-success col-lg-4">
-          <i className="bi bi-plus-lg" style={{ fontSize: "6rem" }}></i>
+        <h3 className="text-warning col-lg-3">
+          <i className="fa fa-headset fa-5x" style={{ fontSize: "6rem" }}></i>
+          <br />
+          Order Recieved({olength})
+        </h3>
+        <h3 className="text-success col-lg-3">
+          <i className="fa fa-plus fa-5x" style={{ fontSize: "6rem" }}></i>
           <br />
           Add Product
         </h3>

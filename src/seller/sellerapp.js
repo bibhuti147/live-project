@@ -40,6 +40,11 @@ const SellerModule = () => {
                 </Link>
               </li>
               <li className="nav-item me-4">
+                <Link className="nav-link" to="/category">
+                  <i className="fa fa-table"></i> Category List
+                </Link>
+              </li>
+              <li className="nav-item me-4">
                 <Link className="nav-link" to="/order">
                   <i class="fa fa-headset"></i> Order List
                 </Link>

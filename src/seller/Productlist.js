@@ -17,6 +17,17 @@ const Myproductlist = () => {
     getProducts();
   }, []);
 
+  const deleteProduct = async (id) => {
+    try {
+      await fetch(`http://localhost:1234/productapi/${id}`, {
+        method: "DELETE",
+      });
+      getProducts();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="mt-4">
       <div className="d-flex mx-5 align-items-center">
@@ -60,7 +71,7 @@ const Myproductlist = () => {
                   className="fw-medium"
                   style={{ border: "1px solid  #d9d9d9" }}
                 >
-                  {product.name}
+                  {product.pname}
                 </th>
                 <th
                   className="fw-medium"
@@ -72,7 +83,7 @@ const Myproductlist = () => {
                   className="fw-medium"
                   style={{ border: "1px solid  #d9d9d9" }}
                 >
-                  {product.description}
+                  {product.details}
                 </th>
                 <th
                   className="fw-medium"
@@ -84,7 +95,12 @@ const Myproductlist = () => {
                   className="fw-medium"
                   style={{ border: "1px solid  #d9d9d9" }}
                 >
-                  <i class="bi bi-trash-fill"></i>
+                  <button
+                    onClick={() => deleteProduct(product.id)}
+                    className="btn btn-danger btn-sm"
+                  >
+                    <i className="fa fa-trash"></i>
+                  </button>
                 </th>
               </tr>
             );
